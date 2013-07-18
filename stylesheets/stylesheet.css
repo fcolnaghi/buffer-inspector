@@ -367,9 +367,13 @@ Full-Width Styles
 }
 
 #footer_wrap {
+  text-align: right;
   background: #212121;
 }
 
+#footer_wrap p{
+  padding-right: 10px;
+}
 
 
 /*******************************************************************************
