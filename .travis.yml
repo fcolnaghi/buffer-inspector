@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk7
+notifications:
+    email:
+        recipients:
+            - suporte@autoprocess.com.br
+        on_success: change
+        on_failure: always
