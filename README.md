@@ -1,4 +1,4 @@
-#Buffer Inspector
+#Buffer Inspector [![Build Status](https://travis-ci.org/autoprocess/buffer-inspector.png?branch=master)](https://travis-ci.org/autoprocess/buffer-inspector)
 
 Buffer Inspector is a simple software, but powerful. It separates a buffer according to a predetermined layout, presenting the results in a table format.
 
