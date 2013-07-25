@@ -25,8 +25,8 @@ public class Parser {
 	/**
 	 * Construtor da classe
 	 * 
-	 * @param layout O layout da transação
-	 * @param buffer O buffer que contém os dados
+	 * @param layout O layout da transacao
+	 * @param buffer O buffer que contem os dados
 	 */
 	public Parser(List<String> layout, String buffer) {
 		this.itens = new ArrayList<ItemTabela>();
@@ -46,7 +46,7 @@ public class Parser {
 		try {
 			
 			// ------------------------
-			// Transforma o conteúdo do arquivo em uma lista encadeada 
+			// Transforma o conteudo do arquivo em uma lista encadeada 
 			// ------------------------
 			prepareLayout();
 			
@@ -62,7 +62,7 @@ public class Parser {
 		}
 		
 		// ------------------------
-		// Se ao final do processo o buffer não estiver vazio (e não houver algum erro anterior), adiciona seu conteúdo em uma nova linha denominada 'resto' 
+		// Se ao final do processo o buffer nao estiver vazio (e nao houver algum erro anterior), adiciona seu conteudo em uma nova linha denominada 'resto' 
 		// ------------------------
 		if (buffer.length() > 0 && !error) {
 			
@@ -92,7 +92,7 @@ public class Parser {
 	public void prepareLayout() throws InvalidLayoutException {
 		
 		// ------------------------
-		// Se o layout estiver vazio, retorna uma exceção
+		// Se o layout estiver vazio, retorna uma excecao
 		// ------------------------
 		if (layout == null || layout.size() == 0) {
 
@@ -106,7 +106,7 @@ public class Parser {
 			Stack<List<ItemTabela>> pilha = new Stack<List<ItemTabela>>();
 			
 			// ------------------------
-			// Cria um nó auxiliar
+			// Cria um no auxiliar
 			// ------------------------
 			ItemTabela no = new ItemTabela();
 			
@@ -116,17 +116,17 @@ public class Parser {
 			for (String linha : layout) {
 						
 				// ------------------------
-				// Descobre o número da linha
+				// Descobre o numero da linha
 				// ------------------------
 				String numeroLinha = linha.substring(0, linha.indexOf(";"));
 				
 				// ------------------------
-				// Separa o número da linha do conteúdo
+				// Separa o numero da linha do conteï¿½do
 				// ------------------------
 				linha = linha.substring(linha.indexOf(";") + 1, linha.length());
 				
 				// ------------------------
-				// Descobre a posição onde abre a chave de sub-lista
+				// Descobre a posicao onde abre a chave de sub-lista
 				// ------------------------
 				int posicao = linha.indexOf('{');
 				
@@ -136,7 +136,7 @@ public class Parser {
 				if (posicao != -1) {
 					
 					// ------------------------
-					// Se a chave não estiver sozinha em uma linha, retoma a partir da linha anterior
+					// Se a chave nao estiver sozinha em uma linha, retoma a partir da linha anterior
 					// Ex: "QTD-TITULARES;2;N; {"
 					// ------------------------
 					if (posicao > 0) {
@@ -147,7 +147,7 @@ public class Parser {
 						String linhaSemChave = linha.substring(0, posicao);
 						
 						// ------------------------
-						// Cria o nó
+						// Cria o no
 						// ------------------------
 						no = novoItem(numeroLinha, linhaSemChave);
 						
@@ -164,14 +164,14 @@ public class Parser {
 					pilha.push(itens);
 					
 					// ------------------------
-					// Seta como a lista atual os nós do filho (que serão criados)
+					// Seta como a lista atual os nos do filho (que serao criados)
 					// ------------------------
 					itens = no.getFilhos();
 					
 				} else if (linha.equals("}")) {
 					
 					// ------------------------
-					// Se a pilha estiver vazia retorna uma exceção
+					// Se a pilha estiver vazia retorna uma excecao
 					// ------------------------
 					if (pilha.empty()) {
 						
@@ -187,7 +187,7 @@ public class Parser {
 				} else {
 					
 					// ------------------------
-					// Cria o nó
+					// Cria o no
 					// ------------------------
 					no = novoItem(numeroLinha, linha);
 					
@@ -201,7 +201,7 @@ public class Parser {
 			}
 			
 			// ------------------------
-			// Limpa a pilha (caso necessário) para a próxima execução
+			// Limpa a pilha (caso necessario) para a proxima execucao
 			// ------------------------
 			while (! pilha.empty()) {
 				pilha.pop();
@@ -223,12 +223,12 @@ public class Parser {
 	private void doParse(List<ItemTabela> lista, String nomePai, int ocorrencias, int nivel) throws IncompleteBufferException {
 		
 		// ------------------------
-		// Percorre todas as ocorrências (em caso de array)
+		// Percorre todas as ocorrencias (em caso de array)
 		// ------------------------
 		for (int i = 0; i < ocorrencias && !error; i++) {
 			
 			// ------------------------
-			// Adiciona um cabeçalho, caso necessário
+			// Adiciona um cabecalho, caso necessario
 			// ------------------------
 			if (nivel > 0) {
 				if (i == 0) {
@@ -250,7 +250,7 @@ public class Parser {
 				ItemTabela no = lista.get(item);
 				
 				// ------------------------
-				// Adiciona o nó na lista de saída e já recupera o seu conteúdo
+				// Adiciona o nï¿½ na lista de saida e ja recupera o seu conteudo
 				// ------------------------
 				try {
 					String valorNo = addItem(no.getNome(), no.getTipo(), no.getTamanho(), no.getDescricao(), no.getFilhos().size(), nivel);
@@ -261,14 +261,14 @@ public class Parser {
 					if (no.getNome().toUpperCase().startsWith("HEADER-PGA-CODIGO-RETORNO")) {
 						
 						// ------------------------
-						// Verifica se é uma tabela de erros
+						// Verifica se ï¿½ uma tabela de erros
 						// ------------------------
 						if (valorNo.equals("2547834883") || valorNo.equals("2547834886") || valorNo.equals("2682053626")) {
 
 							try {
 								
 								// ------------------------
-								// Recupera a quantidade de códigos de fracasso
+								// Recupera a quantidade de codigos de fracasso
 								// ------------------------
 								int qtdCodigosFracasso = Integer.parseInt(buffer.substring(0, 2));
 								
@@ -278,12 +278,12 @@ public class Parser {
 								buffer.delete(0, 2);
 								
 								// ------------------------
-								// Adiciona todos os códigos de fracasso na tabela
+								// Adiciona todos os codigos de fracasso na tabela
 								// ------------------------
 								for (int codigo = 0; codigo < qtdCodigosFracasso; codigo++) {
 									
 									// ------------------------
-									// Corrige o tamanho (se for necessário) para não dar erro quando for buscar o valor
+									// Corrige o tamanho (se for necessario) para nao dar erro quando for buscar o valor
 									// ------------------------
 									int tamanho = 10;
 									
@@ -302,7 +302,7 @@ public class Parser {
 									buffer.delete(0, tamanho);
 									
 									// ------------------------
-									// Adiciona o fracasso na saída
+									// Adiciona o fracasso na saida
 									// ------------------------
 									ItemTabela fracasso = new ItemTabela();
 									
@@ -313,7 +313,7 @@ public class Parser {
 									fracasso.setNivel(nivel + 1);
 									
 									// ------------------------
-									// Adiciona na saída
+									// Adiciona na saida
 									// ------------------------
 									saida.add(fracasso);
 									
@@ -321,7 +321,7 @@ public class Parser {
 								
 							} catch (Exception e) {
 								// ------------------------
-								// Apenas evita disparar um erro se não conseguir fazer substring
+								// Apenas evita disparar um erro se nao conseguir fazer substring
 								// ------------------------
 							}
 							
@@ -331,7 +331,7 @@ public class Parser {
 					if (no.getLink() != null) { // ???
 						
 						// ------------------------
-						// Procura pelo campo de saida que dá origem a qtde de ocorrencias
+						// Procura pelo campo de saida que da origem a qtde de ocorrencias
 						// ------------------------
 						boolean achou = false;
 						ItemTabela noAuxiliar = null;
@@ -347,12 +347,12 @@ public class Parser {
 					}
 					
 					// ------------------------
-					// Se o item atual tiver filhos, chama a função recursivamente
+					// Se o item atual tiver filhos, chama a funcao recursivamente
 					// ------------------------
 					if (no.getFilhos().size() > 0 && valorNo.length() > 0) {
 						
 						// ------------------------
-						// Recupera a quantidade de ocorrências dinâmicas
+						// Recupera a quantidade de ocorrencias dinamicas
 						// ------------------------
 						int qtdFilhos = Integer.valueOf(valorNo);
 						
@@ -364,7 +364,7 @@ public class Parser {
 						}
 						
 						// ------------------------
-						// Chama a função recursivamente
+						// Chama a funcao recursivamente
 						// ------------------------
 						doParse(no.getFilhos(), no.getNome(), qtdFilhos, nivel + 1);
 						
@@ -391,13 +391,13 @@ public class Parser {
 		ItemTabela retorno = new ItemTabela();
 		
 		// ------------------------
-		// Separa a string através do token ';'
+		// Separa a string atraves do token ';'
 		// ------------------------
 		Scanner s = new Scanner(linha);
 		s.useDelimiter(";");
 		
 		// ------------------------
-		// Seta o número da linha
+		// Seta o numero da linha
 		// ------------------------
 		retorno.setLinhaArquivo(numeroLinha);
 		
@@ -413,12 +413,12 @@ public class Parser {
 			String tamanho = s.next().trim();
 			
 			// ------------------------
-			// Se tiver uma vírgula, soma as casas decimais no tamanho
+			// Se tiver uma virgula, soma as casas decimais no tamanho
 			// -----------------------
 			if (tamanho.contains(",")) {
 
 				// ------------------------
-				// Remove os espaços
+				// Remove os espacos
 				// ------------------------
 				tamanho = tamanho.replaceAll(" ", "");
 
@@ -440,8 +440,10 @@ public class Parser {
 			
 			retorno.setTamanho(Integer.parseInt(tamanho));
 			
-		} catch (Exception e) { // Algum caracter inválido na posição onde deveria ser o tamanho
+		} catch (Exception e) { // Algum caracter invï¿½lido na posicao onde deveria ser o tamanho
 			throw new InvalidLayoutException(numeroLinha);
+		} finally {
+			s.close();
 		}
 		
 		// ------------------------
@@ -452,12 +454,12 @@ public class Parser {
 		tipo = tipo.toUpperCase();
 		
 		// ------------------------
-		// Se tiver um parênteses, significa que é um array de tamanho fixo
+		// Se tiver um parenteses, significa que e um array de tamanho fixo
 		// ------------------------
 		if (tipo.contains("(")) {
 
 			// ------------------------
-			// Remove os espaços
+			// Remove os espacos
 			// ------------------------
 			tipo = tipo.replaceAll(" ", "");
 
@@ -485,7 +487,7 @@ public class Parser {
 		}
 		
 		// ------------------------
-		// Seta a descrição (se houver)
+		// Seta a descricao (se houver)
 		// ------------------------
 		try {
 			String descricao = s.next();
@@ -523,9 +525,9 @@ public class Parser {
 	 * @param nome O nome do item
 	 * @param tipo O tipo do item
 	 * @param tamanho O tamanho do item
-	 * @param descricao A descrição (tooltip) do item
+	 * @param descricao A descricao (tooltip) do item
 	 * @param qtdFilhos A quantidade de itens filhos
-	 * @param nivel O nível
+	 * @param nivel O nï¿½vel
 	 * @return
 	 * @throws IncompleteBufferException
 	 * @throws InvalidArrayLengthException 
@@ -535,7 +537,7 @@ public class Parser {
 		ItemTabela retorno = new ItemTabela();
 		
 		// ------------------------
-		// Força um erro caso o buffer seja menor do que o esperado pelo layout
+		// Forca um erro caso o buffer seja menor do que o esperado pelo layout
 		// ------------------------
 		if (buffer.length() == 0) {
 			throw new IncompleteBufferException();
@@ -565,12 +567,12 @@ public class Parser {
 
 		
 		// ------------------------
-		// Seta a descrição
+		// Seta a descricao
 		// ------------------------
 		retorno.setDescricao(descricao);
 		
 		// ------------------------
-		// Corrige o tamanho (se for necessário) para não dar erro quando for buscar o valor
+		// Corrige o tamanho (se for necessario) para nao dar erro quando for buscar o valor
 		// ------------------------
 		if (tamanho > buffer.length()) {
 			tamanho = buffer.length();
@@ -597,7 +599,7 @@ public class Parser {
 			retorno.setSequencia("-");
 			
 			// ------------------------
-			// Se o tamanho do array for inválido, retorna uma exceção
+			// Se o tamanho do array for invalido, retorna uma excecao
 			// ------------------------
 			if (!valor.matches("\\d+")) {
 				throw new InvalidArrayLengthException();
@@ -606,32 +608,32 @@ public class Parser {
 		}
 		
 		// ------------------------
-		// Substitui os espaços no final de uma string por um caracter visível
+		// Substitui os espacos no final de uma string por um caracter visivel
 		// ------------------------
 		if (tipo.equals("A")) {
 			valor = valor.trim();
 			
 			for (int j = valor.length(); j < retorno.getTamanho(); j++) {
-				valor += "·";
+				valor += "ï¿½";
 			}
 		}
 		
 		// ------------------------
-		// Se o tipo for numérico e tiver algum espaço no valor, substitui cada espaço por um caracter visível
+		// Se o tipo for numerico e tiver algum espaco no valor, substitui cada espaco por um caracter visivel
 		// ------------------------
 		if (tipo.equals("N")) {
-			valor = valor.replaceAll(" ", "·");
+			valor = valor.replaceAll(" ", "ï¿½");
 
 			retorno.setValor(valor);
 		}
 		
 		// ------------------------
-		// Seta o valor no nó
+		// Seta o valor no no
 		// ------------------------
 		retorno.setValor(valor);
 		
 		// ------------------------
-		// Adiciona na saída
+		// Adiciona na saida
 		// ------------------------
 		saida.add(retorno);
 		

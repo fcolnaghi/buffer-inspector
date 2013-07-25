@@ -21,7 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.autoprocess</groupId>
 	<artifactId>buffer-inspector</artifactId>
-	<version>13.7.24</version>
+	<version>${maven.build.timestamp}-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Buffer Inspector</name>
 	<description>Displays a table of contents breaking a buffer based on a specific file layout.</description>
@@ -30,6 +30,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
+		
+		<maven.build.timestamp.format>yy.M.dd</maven.build.timestamp.format>
 	</properties>
 
 	<organization>
@@ -43,12 +45,6 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-
-	<scm>
-		<connection>scm:git:git://github.com/autoprocess/buffer-inspector</connection>
-		<developerConnection>scm:git:git@github.com:autoprocess/buffer-inspector.git</developerConnection>
-		<url>https://github.com/autoprocess/buffer-inspector</url>
-	</scm>
 
 	<build>
 		<plugins>
@@ -77,7 +73,123 @@
 				</configuration>
 			</plugin>
 
+			<!-- baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+				
+				
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.7</version>
+				<configuration>
+					<description>Official ${project.name} build of the
+						${project.version} release</description>
+					<message>Official ${project.name} build</message>
+					<server>github.com</server>
+					<repositoryName>${git.name}</repositoryName>
+					<repositoryOwner>Intelygenz</repositoryOwner>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.6</version>
+				<configuration>
+					<description>${project.version} release of ${project.name}</description>
+					<override>true</override>
+					<includeAttached>true</includeAttached>
+					<server>github.com</server>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>2.5</version>
+							<reportSets>
+								<reportSet>
+									<reports>
+										<report>dependencies</report>
+										<report>project-team</report>
+										<report>mailing-list</report>
+										<report>cim</report>
+										<report>issue-tracking</report>
+										<report>license</report>
+										<report>scm</report>
+									</reports>
+								</reportSet>
+							</reportSets>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.7</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.6</version>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+			<!-- baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah -->
+
 		</plugins>
 	</build>
+
+	<scm>
+		<connection>scm:git:https://github.com/autoprocess/buffer-inspector.git</connection>
+	</scm>
 
 </project>

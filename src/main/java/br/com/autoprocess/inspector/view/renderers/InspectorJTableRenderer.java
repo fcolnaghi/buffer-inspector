@@ -50,29 +50,29 @@ public class InspectorJTableRenderer extends DefaultTableCellRenderer {
 		}
 		
 		// ---------------------------
-		// Recupera o objeto que contém o conteúdo da linha
+		// Recupera o objeto que contem o conteudo da linha
 		// ---------------------------
 		ItemTabela item = ((TableModel) table.getModel()).getCampo(row);
 		
 		// ---------------------------
-		// Tooltip com a descrição do item (caso exista)
+		// Tooltip com a descricao do item (caso exista)
 		// ---------------------------
 		if (item.getDescricao() != null && !item.getDescricao().equals("")) {
 			renderer.setToolTipText(item.getDescricao());
 		}
 		
 		// ---------------------------
-		// Identifica as informações de header da pga
+		// Identifica as informacoes de header da pga
 		// ---------------------------
 		if (item.getNome() != null && item.getNome().toUpperCase().startsWith("HEADER-PGA")) {
 			renderer.setBackground(new Color(240, 240, 240));
 		}
 		
 		// ---------------------------
-		// Sinaliza que há um erro quando:
+		// Sinaliza que ha um erro quando:
 		// 	- Houve um erro no parser da linha
-		// 	- O tipo é numérico mas existe caracteres não numéricos
-		// 	- É a última linha, com o resto do buffer
+		// 	- O tipo e numerico mas existe caracteres nao numericos
+		// 	- e a ultima linha, com o resto do buffer
 		// ---------------------------
 		if (item.isErro() || !isValid(item)) {
 			renderer.setForeground(new Color(241, 63, 83));
@@ -85,7 +85,7 @@ public class InspectorJTableRenderer extends DefaultTableCellRenderer {
 		}
 
 		// ---------------------------
-		// Define as cores padrão ao selecionar
+		// Define as cores padrao ao selecionar
 		// ---------------------------
 		if (isSelected) {
 			renderer.setBackground(table.getSelectionBackground());
@@ -99,7 +99,7 @@ public class InspectorJTableRenderer extends DefaultTableCellRenderer {
 	}
 
 	/**
-	 * Verifica se o item é válido
+	 * Verifica se o item e valido
 	 * 
 	 * @param item
 	 * @return

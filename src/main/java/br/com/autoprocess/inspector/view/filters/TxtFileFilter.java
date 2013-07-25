@@ -29,7 +29,7 @@ public class TxtFileFilter extends FileFilter {
 	}
 	
 	/**
-	 * Retorna a extensão do arquivo
+	 * Retorna a extensao do arquivo
 	 * 
 	 * @param fileName
 	 * @return

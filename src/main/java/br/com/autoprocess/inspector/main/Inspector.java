@@ -13,19 +13,19 @@ public class Inspector {
 	public static final int QTD_IDENTACOES = 3;
 	
 	/**
-	 * Cria uma inst�ncia da janela principal
+	 * Cria uma instancia da janela principal
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
 		// ---------------------------
-		// Seta a aplica��o para o idioma ingl�s
+		// Seta a aplicacao para o idioma ingles
 		// ---------------------------
 		Locale.setDefault(new Locale("en", "US"));
 		
 		// ---------------------------
-		// Cria uma nova inst�ncia do form main
+		// Cria uma nova instancia do form main
 		// ---------------------------
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

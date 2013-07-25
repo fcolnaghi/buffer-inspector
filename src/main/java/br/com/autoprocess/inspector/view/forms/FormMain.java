@@ -3,7 +3,6 @@ package br.com.autoprocess.inspector.view.forms;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,11 +12,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -29,7 +25,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -72,9 +70,9 @@ public class FormMain extends JFrame {
 	private JRadioButton radioEntrada;
 	private JRadioButton radioSaida;
 	
-	private JComboBox comboServicoGSI;
-	private JComboBox comboOperacaoGSI;
-	private JComboBox comboTransacaoMI;
+	private JComboBox<ItemCombo> comboServicoGSI;
+	private JComboBox<ItemCombo> comboOperacaoGSI;
+	private JComboBox<ItemCombo> comboTransacaoMI;
 	
 	private InspectorTextArea buffer;
 	private JTable table;
@@ -87,7 +85,7 @@ public class FormMain extends JFrame {
 	public FormMain() {
 		
 		// ---------------------------
-		// Ao inicializar apresenta a versão
+		// Ao inicializar apresenta a versao
 		// ---------------------------
 		System.out.println(Inspector.INTERNAL_NAME + " has started...");
 		
@@ -100,6 +98,11 @@ public class FormMain extends JFrame {
 		// Propriedades
 		// ---------------------------
 		setFormProperties();
+		
+		// ---------------------------
+		// Menu
+		// ---------------------------
+		criaMenu();
 		
 		// ---------------------------
 		// Painel superior
@@ -135,7 +138,7 @@ public class FormMain extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		// ---------------------------
-		// Ícone
+		// icone
 		// ---------------------------
 		ImageIcon icon = new ImageIcon(getClass().getResource("/simbolo-256x256-transparent.png"));
 		setIconImage(icon.getImage());
@@ -153,7 +156,72 @@ public class FormMain extends JFrame {
 	}
 
 	/**
-	 * Método responsável por criar o painel superior
+	 * Metodo responsavel por criar o menu
+	 */
+	public void criaMenu() {
+		
+		JMenuBar menubar = new JMenuBar();
+		
+		// ---------------------------
+		// Icones
+		// ---------------------------
+		// ImageIcon icon = new ImageIcon(getClass().getResource("exit.png"));
+
+		// ---------------------------
+		// Arquivo
+		// ---------------------------
+		JMenu menuArquivo = new JMenu("Arquivo");
+		menuArquivo.setMnemonic(KeyEvent.VK_A);
+		menubar.add(menuArquivo);
+		
+		// ---------------------------
+		// Arquivo - Exportar
+		// ---------------------------
+		JMenuItem submenuExportar = new JMenuItem("Exportar");
+		submenuExportar.setMnemonic(KeyEvent.VK_E);
+		menuArquivo.add(submenuExportar);
+		
+		menuArquivo.addSeparator();
+		
+		// ---------------------------
+		// Arquivo - Sair
+		// ---------------------------
+		JMenuItem submenuSair = new JMenuItem("Sair");
+		submenuSair.setMnemonic(KeyEvent.VK_S);
+		
+		submenuSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				System.exit(0);
+			}
+		});
+		
+		menuArquivo.add(submenuSair);
+		
+		// ---------------------------
+		// Ajuda
+		// ---------------------------
+		JMenu menuAjuda = new JMenu("Ajuda");
+		menuAjuda.setMnemonic(KeyEvent.VK_J);
+		menubar.add(menuAjuda);
+
+		// ---------------------------
+		// Ajuda - Sobre
+		// ---------------------------
+		JMenuItem submenuSobre = new JMenuItem("Sobre Buffer Inspector");
+		submenuSobre.setMnemonic(KeyEvent.VK_S);
+
+		menuAjuda.add(submenuSobre);
+
+		// ---------------------------
+		// Seta o menu no form
+		// ---------------------------
+		setJMenuBar(menubar);
+	
+		
+	}
+	
+	/**
+	 * Metodo responsavel por criar o painel superior
 	 */
 	public void criaPainelSuperior() {
 		
@@ -165,7 +233,7 @@ public class FormMain extends JFrame {
 		getContentPane().add(painel, BorderLayout.NORTH);
 
 		// ---------------------------
-		// Cria os radios de seleção com os tipos de transação
+		// Cria os radios de selecao com os tipos de transacao
 		// ---------------------------
 		radioGSI = new JRadioButton("GSI");
 		radioMI = new JRadioButton("MI");
@@ -193,11 +261,11 @@ public class FormMain extends JFrame {
 		painel.add(painelDireito, BorderLayout.EAST);
 		
 		// ---------------------------
-		// Cria os combos com os layout de transação
+		// Cria os combos com os layout de transacao
 		// ---------------------------
-		comboServicoGSI = new JComboBox(modInspector.getServicesList());
-		comboOperacaoGSI = new JComboBox();
-		comboTransacaoMI = new JComboBox(modInspector.getTransactionsList());
+		comboServicoGSI = new JComboBox<ItemCombo>(modInspector.getServicesList());
+		comboOperacaoGSI = new JComboBox<ItemCombo>();
+		comboTransacaoMI = new JComboBox<ItemCombo>(modInspector.getTransactionsList());
 		
 		// ---------------------------
 		// Define o formato das combobox
@@ -212,7 +280,7 @@ public class FormMain extends JFrame {
 		painelDireito.add(comboTransacaoMI);
 		
 		// ---------------------------
-		// Cria os radios de seleção com os tipos de entrada/saída
+		// Cria os radios de selecao com os tipos de entrada/saï¿½da
 		// ---------------------------
 		radioEntrada = new JRadioButton("Input");
 		radioSaida = new JRadioButton("Output");
@@ -236,12 +304,12 @@ public class FormMain extends JFrame {
 		radioGSI.setSelected(true);
 		
 		// ---------------------------
-		// Seta o foco na opção 'Entrada' (default)
+		// Seta o foco na opcao 'Entrada' (default)
 		// ---------------------------
 		radioEntrada.setSelected(true);
 		
 		// ---------------------------
-		// Inicialmente somente a combo 'Serviço GSI' deve ser visível, então esconde as demais
+		// Inicialmente somente a combo 'Servico GSI' deve ser visivel, entao esconde as demais
 		// ---------------------------
 		comboOperacaoGSI.setVisible(false);
 		comboTransacaoMI.setVisible(false);
@@ -253,22 +321,22 @@ public class FormMain extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				
 				// ---------------------------
-				// Esconde a combo 'Transação MI'
+				// Esconde a combo 'Transacao MI'
 				// ---------------------------
 				comboTransacaoMI.setVisible(false);
 				
 				// ---------------------------
-				// Apresenta a combo 'Serviço GSI'
+				// Apresenta a combo 'Servico GSI'
 				// ---------------------------
 				comboServicoGSI.setVisible(true);
 				
 				// ---------------------------
-				// Esconde a combo 'Operaçaõ GSI'
+				// Esconde a combo 'Operacao GSI'
 				// ---------------------------
 				comboOperacaoGSI.setVisible(false);
 				
 				// ---------------------------
-				// Limpa a combo 'Serviço GSI'
+				// Limpa a combo 'Servico GSI'
 				// ---------------------------
 				if (comboServicoGSI.getSelectedIndex() != 0) {
 					comboServicoGSI.setSelectedIndex(0);
@@ -284,22 +352,22 @@ public class FormMain extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				
 				// ---------------------------
-				// Esconde a combo 'Serviço GSI'
+				// Esconde a combo 'Servico GSI'
 				// ---------------------------
 				comboServicoGSI.setVisible(false);
 				
 				// ---------------------------
-				// Esconde a combo 'Operação GSI'
+				// Esconde a combo 'Operacao GSI'
 				// ---------------------------
 				comboOperacaoGSI.setVisible(false);
 				
 				// ---------------------------
-				// Apresenta a combo 'Transação MI'
+				// Apresenta a combo 'Transacao MI'
 				// ---------------------------
 				comboTransacaoMI.setVisible(true);
 				
 				// ---------------------------
-				// Limpa a combo 'Transação MI'
+				// Limpa a combo 'Transacao MI'
 				// ---------------------------
 				if (comboTransacaoMI.getSelectedIndex() != 0) {
 					comboTransacaoMI.setSelectedIndex(0);
@@ -309,34 +377,34 @@ public class FormMain extends JFrame {
 		});
 		
 		// ---------------------------
-		// Listener para a opção 'Serviço GSI'
+		// Listener para a opcao 'Servico GSI'
 		// ---------------------------
 		comboServicoGSI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				
 				// ---------------------------
-				// Recupera o serviço selecionado
+				// Recupera o Servico selecionado
 				// ---------------------------
 				ItemCombo servico = (ItemCombo) comboServicoGSI.getSelectedItem();
 				
 				// ---------------------------
-				// Se selecionou a primeira opção (default)
+				// Se selecionou a primeira opcao (default)
 				// ---------------------------
 				if (comboServicoGSI.getSelectedIndex() == 0) {
 					
 					// ---------------------------
-					// Esconde a combo 'Operaçaõ GSI'
+					// Esconde a combo 'Operacao GSI'
 					// ---------------------------
 					comboOperacaoGSI.setVisible(false);
 					
 				} else {
 					
 					// ---------------------------
-					// Apresenta a combo 'Operaçaõ GSI'
+					// Apresenta a combo 'Operacao GSI'
 					// ---------------------------
 					comboOperacaoGSI.setVisible(true);
 					
-					DefaultComboBoxModel modeloComboBox = new DefaultComboBoxModel(modInspector.getOperationsList(servico.getValor()));
+					DefaultComboBoxModel<ItemCombo> modeloComboBox = new DefaultComboBoxModel<ItemCombo>(modInspector.getOperationsList(servico.getValor()));
 					comboOperacaoGSI.setModel(modeloComboBox);
 				}
 
@@ -344,7 +412,7 @@ public class FormMain extends JFrame {
 		});
 
 		// ---------------------------
-		// Listener para a combo 'Operação GSI'
+		// Listener para a combo 'Operacao GSI'
 		// ---------------------------
 		comboOperacaoGSI.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent event) {
@@ -355,7 +423,7 @@ public class FormMain extends JFrame {
 		});
 		
 		// ---------------------------
-		// Listener para a combo 'Transação MI'
+		// Listener para a combo 'Transacao MI'
 		// ---------------------------
 		comboTransacaoMI.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent event) {
@@ -366,7 +434,7 @@ public class FormMain extends JFrame {
 		});
 	
 		// ---------------------------
-		// Listener para a opção 'Entrada'
+		// Listener para a opcao 'Entrada'
 		// ---------------------------
 		radioEntrada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -375,7 +443,7 @@ public class FormMain extends JFrame {
 		});
 
 		// ---------------------------
-		// Listener para a opção 'Saída'
+		// Listener para a opcao 'Saida'
 		// ---------------------------
 		radioSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -386,7 +454,7 @@ public class FormMain extends JFrame {
 	}
 	
 	/*
-	 * Método responsável por criar o painel central
+	 * Metodo responsavel por criar o painel central
 	 */
 	public void criaPainelCentral() {
 
@@ -462,7 +530,7 @@ public class FormMain extends JFrame {
 	}
 	
 	/**
-	 * Método responsável por criar o painel inferior
+	 * Metodo responsavel por criar o painel inferior
 	 */
 	public void criaPainelInferior() {
 		
@@ -480,24 +548,24 @@ public class FormMain extends JFrame {
 		// ---------------------------
 		// Logo
 		// ---------------------------
-		JLabel logo = new JLabel();
-		logo.setToolTipText("Visit our website");
-		logo.setIcon(new ImageIcon(getClass().getResource("/logo-lateral-175x50.png")));
-		
-		logo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		logo.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() > 0) {
-					try {
-						Desktop.getDesktop().browse(new URI("http://www.autoprocess.com.br/?f="+ Inspector.INTERNAL_NAME));
-					} catch (Exception ex) {
-						// nothing to do
-					}
-				}
-			}
-		});
-		
-		painelEsquerdo.add(logo, BorderLayout.WEST);
+//		JLabel logo = new JLabel();
+//		logo.setToolTipText("Visit our website");
+//		logo.setIcon(new ImageIcon(getClass().getResource("/logo-lateral-175x50.png")));
+//		
+//		logo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//		logo.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent e) {
+//				if (e.getClickCount() > 0) {
+//					try {
+//						Desktop.getDesktop().browse(new URI("http://www.autoprocess.com.br/?f="+ Inspector.INTERNAL_NAME));
+//					} catch (Exception ex) {
+//						// nothing to do
+//					}
+//				}
+//			}
+//		});
+//		
+//		painelEsquerdo.add(logo, BorderLayout.WEST);
 		
 		// ---------------------------
 		// Exportar
@@ -530,7 +598,7 @@ public class FormMain extends JFrame {
 		comboTransacaoMI.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		
 		// ---------------------------
-		// Formata o espaçamento entre os itens da lista
+		// Formata o espaï¿½amento entre os itens da lista
 		// ---------------------------
 		comboServicoGSI.setRenderer(new ComboBoxRenderer());
 		comboOperacaoGSI.setRenderer(new ComboBoxRenderer());
@@ -544,7 +612,7 @@ public class FormMain extends JFrame {
 	private void formataBuffer() {
 
 		// ---------------------------
-		// Seta a quebra automática de linhas
+		// Seta a quebra automatica de linhas
 		// ---------------------------
 		buffer.setLineWrap(true);
 		
@@ -576,13 +644,13 @@ public class FormMain extends JFrame {
 	private void formataTable() {
 
 		// ---------------------------
-		// Centraliza o cabeçalho das colunas
+		// Centraliza o cabecalho das colunas
 		// ---------------------------
 	    DefaultTableCellRenderer headerRender = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
 	    headerRender.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		// ---------------------------
-		// Por último, atualiza a largura das colunas
+		// Por ultimo, atualiza a largura das colunas
 		// ---------------------------
 		double[] percentuais = { 0.02, 0.35, 0.40, 0.13, 0.10 };
 		
@@ -613,14 +681,14 @@ public class FormMain extends JFrame {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			
 			// ---------------------------
-			// Inicia o processo caso o buffer não estiver vazio
+			// Inicia o processo caso o buffer nao estiver vazio
 			// ---------------------------
 			if (buffer.getText().equals("")) {
 				table.setModel(new TableModel());
 			} else {
 				
 				// ---------------------------
-				// Verifica se o buffer é de entrada ou de saída
+				// Verifica se o buffer e de entrada ou de saï¿½da
 				// ---------------------------
 				Contexto ctx = Contexto.ENTRADA;
 				
@@ -634,17 +702,17 @@ public class FormMain extends JFrame {
 				if (comboOperacaoGSI.isVisible()) {
 					
 					// ---------------------------
-					// Recupera a opção selecionada na combo 'Operação GSI'
+					// Recupera a opcao selecionada na combo 'Operacao GSI'
 					// ---------------------------
 					int index = comboOperacaoGSI.getSelectedIndex();
 					
 					// ---------------------------
-					// Se não for a primeira opção (label da combobox)
+					// Se nao for a primeira opcao (label da combobox)
 					// ---------------------------
 					if (index != 0) {
 						
 						// ---------------------------
-						// Recupera a operação GSI selecionada
+						// Recupera a Operacao GSI selecionada
 						// ---------------------------
 						ItemCombo operacao = (ItemCombo) comboOperacaoGSI.getSelectedItem();
 						
@@ -664,17 +732,17 @@ public class FormMain extends JFrame {
 				} else if (comboTransacaoMI.isVisible()) { // MI
 					
 					// ---------------------------
-					// Recupera a opção selecionada na combo 'Transação MI'
+					// Recupera a opcao selecionada na combo 'Transacao MI'
 					// ---------------------------
 					int index = comboTransacaoMI.getSelectedIndex();
 					
 					// ---------------------------
-					// Se não for a primeira opção (label da combobox)
+					// Se nao for a primeira opcao (label da combobox)
 					// ---------------------------
 					if (index != 0) {
 						
 						// ---------------------------
-						// Recupera a transação MI selecionada
+						// Recupera a Transacao MI selecionada
 						// ---------------------------
 						ItemCombo transacao = (ItemCombo) comboTransacaoMI.getSelectedItem();
 						
@@ -716,23 +784,23 @@ public class FormMain extends JFrame {
 	private void exportData() {
 		
 		// ---------------------------
-		// Cria a caixa de diálogo para salvar o arquivo
+		// Cria a caixa de diï¿½logo para salvar o arquivo
 		// ---------------------------
 		JFileChooser fileChooser = new JFileChooser();
 		
 		// ---------------------------
-		// Seta as propriedades da caixa de diálogo
+		// Seta as propriedades da caixa de dialogo
 		// ---------------------------
 		fileChooser.setFileFilter(new TxtFileFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		
 		// ---------------------------
-		// Seta a opção padrão
+		// Seta a opcao padrao
 		// ---------------------------
 		int salvar = JOptionPane.YES_OPTION;
 		
 		// ---------------------------
-		// Se o usuário não clicou em cancelar
+		// Se o usuario nao clicou em cancelar
 		// ---------------------------
 		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			
@@ -742,12 +810,12 @@ public class FormMain extends JFrame {
 			try {
 				
 				// ---------------------------
-				// Recupera o arquivo que a caixa de diálogo está tentando criar
+				// Recupera o arquivo que a caixa de dialogo esta tentando criar
 				// ---------------------------
 				File file = fileChooser.getSelectedFile();
 				
 				// ---------------------------
-				// Se o arquivo já existe solicita permissão para sobreescrever
+				// Se o arquivo ja existe solicita permissao para sobreescrever
 				// ---------------------------
 				if (file.exists()) {
 					
@@ -757,7 +825,7 @@ public class FormMain extends JFrame {
 				}
 				
 				// ---------------------------
-				// Se tiver permissão para continuar
+				// Se tiver permissao para continuar
 				// ---------------------------
 				if (salvar == JOptionPane.YES_OPTION) {
 					

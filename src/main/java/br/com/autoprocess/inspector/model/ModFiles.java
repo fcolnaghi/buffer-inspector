@@ -16,7 +16,7 @@ import br.com.autoprocess.inspector.bean.TipoHeader;
 public class ModFiles {
 	
 	/**
-	 * Retorna uma lista de servi�os GSI
+	 * Retorna uma lista de servicos GSI
 	 * 
 	 * @return
 	 */
@@ -25,19 +25,19 @@ public class ModFiles {
 		List<String> retorno = new ArrayList<String>();
 		
 		// ------------------------
-		// Carrega o diret�rio
+		// Carrega o diretorio
 		// ------------------------
 		File file = new File(getApplicationPath() + "\\GSI");
 		
 		// ------------------------
-		// Cria o diret�rio caso ele n�o exista
+		// Cria o diretorio caso ele nao exista
 		// ------------------------
 		if (!file.exists()) {
 			file.mkdir();
 		} else {
 			
 			// ------------------------
-			// Lista os diret�rios
+			// Lista os diretorios
 			// ------------------------
 			for (File f : file.listFiles()) {
 				if (f.isDirectory()) {
@@ -55,9 +55,9 @@ public class ModFiles {
 	}
 	
 	/**
-	 * Retorna uma lista de opera��es de um determinado servi�o GSI
+	 * Retorna uma lista de operacoes de um determinado servico GSI
 	 * 
-	 * @param service O nome do servi�o GSI
+	 * @param service O nome do servico GSI
 	 * @return
 	 */
 	public List<String> getOperationsList(String service) {
@@ -65,12 +65,12 @@ public class ModFiles {
 		List<String> retorno = new ArrayList<String>();
 		
 		// ------------------------
-		// Carrega o diret�rio
+		// Carrega o diretorio
 		// ------------------------
 		File file = new File(getApplicationPath() + "\\GSI\\" + service);
 		
 		// ------------------------
-		// Cria o diret�rio caso ele n�o exista
+		// Cria o diretorio caso ele nao exista
 		// ------------------------
 		if (!file.exists()) {
 			file.mkdir();
@@ -91,7 +91,7 @@ public class ModFiles {
 	}
 	
 	/**
-	 * Retorna uma lista de servi�os MI
+	 * Retorna uma lista de servicos MI
 	 * 
 	 * @return
 	 */
@@ -101,28 +101,28 @@ public class ModFiles {
 		String quebraLinha = System.getProperty("line.separator");
 		
 		// ------------------------
-		// Carrega o diret�rio
+		// Carrega o diretorio
 		// ------------------------
 		File file = new File(getApplicationPath() + "\\MI");
 		
 		// ------------------------
-		// Cria o diret�rio caso ele n�o exista
+		// Cria o diretorio caso ele nao exista
 		// ------------------------
 		if (!file.exists()) {
 			file.mkdir();
 			
 			// ------------------------
-			// Cria um arquivo de exemplo dentro do diret�rio
+			// Cria um arquivo de exemplo dentro do diretorio
 			// ------------------------
 			try {
 				
 				// ------------------------
-				// Armazena o conte�do que ser� escrito no arquivo
+				// Armazena o conteudo que sera escrito no arquivo
 				// ---------------------------
 				StringBuilder conteudoArquivo = new StringBuilder();
 				
 				// ---------------------------
-				// Escreve o conte�do no arquivo
+				// Escreve o conteudo no arquivo
 				// ---------------------------
 				conteudoArquivo.append("// ---------------------------------------------------------------------------" + quebraLinha);
 				conteudoArquivo.append("// 1) Blank lines are ignored" + quebraLinha);
@@ -163,12 +163,12 @@ public class ModFiles {
 				conteudoArquivo.append("error-message;100;Example of output message error" + quebraLinha);
 				
 				// ---------------------------
-				// Cria o arquivo caso n�o exista
+				// Cria o arquivo caso nao exista
 				// ---------------------------
 				File template = new File(getApplicationPath() + "\\MI\\template.txt");
 				
 				// ---------------------------
-				// Escreve o conte�do no arquivo
+				// Escreve o conteudo no arquivo
 				// ---------------------------
 				FileWriter arquivo = new FileWriter(template);
 				arquivo.write(conteudoArquivo.toString());
@@ -228,12 +228,12 @@ public class ModFiles {
 			linhas = new Scanner(file);
 
 			// ------------------------
-			// Armazena o n�mero da linha do arquivo
+			// Armazena o numero da linha do arquivo
 			// ------------------------
 			int i = 1;
 			
 			// ------------------------
-			// Transfere o conte�do do arquivo para a vari�vel de retorno
+			// Transfere o conteudo do arquivo para a variavel de retorno
 			// ------------------------
 			while (linhas.hasNext()) {
 				
@@ -276,9 +276,9 @@ public class ModFiles {
 	}
 	
 	/**
-	 * Retorna o caminho onde a aplica��o est� sendo executada
+	 * Retorna o caminho onde a aplicacao esta sendo executada
 	 * 
-	 * @return caminho da aplica��o
+	 * @return caminho da aplicacao
 	 */
 	public String getApplicationPath() {
 		
@@ -289,7 +289,7 @@ public class ModFiles {
 		File file = new File(url).getParentFile();
 
 		// ------------------------
-		// Retorna o caminho quando a aplica��o est� dentro de um arquivo .jar
+		// Retorna o caminho quando a aplicacao esta dentro de um arquivo .jar
 		// ------------------------
 		if (file.getPath().contains(".jar")) {
 			

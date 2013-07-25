@@ -15,7 +15,7 @@ import javax.swing.text.JTextComponent;
 
 /**
  * Sobreescreve o componente JTextArea, incrementando com a funcionalidade de
- * alterar os modos de inserção ou alteração (tecla insert)
+ * alterar os modos de insercao ou alteracao (tecla insert)
  */
 public class InspectorTextArea extends JTextArea {
 
@@ -57,7 +57,7 @@ public class InspectorTextArea extends JTextArea {
 	}
 	
 	/**
-	 * Inicializa o componente com as opções default
+	 * Inicializa o componente com as opcoes default
 	 */
 	private void initialize() {
 		
@@ -67,7 +67,7 @@ public class InspectorTextArea extends JTextArea {
 		setCaretColor(Color.BLACK);
 		
 		// ---------------------------
-		// Recupera o cursor padrão (linha vertical antes do caractere)
+		// Recupera o cursor padrao (linha vertical antes do caractere)
 		// ---------------------------
 		defaultCaret = getCaret();
 		
@@ -103,12 +103,12 @@ public class InspectorTextArea extends JTextArea {
 	}
 
 	/**
-	 * Sobreescreve o método replaceSelection
+	 * Sobreescreve o mï¿½todo replaceSelection
 	 */
 	public void replaceSelection(String text) {
 
 		// ---------------------------
-		// Implementa o modo sobrescrever, selecionando o caractere na posição atual do cursor
+		// Implementa o modo sobrescrever, selecionando o caractere na posiï¿½ï¿½o atual do cursor
 		// ---------------------------
 		if (isOvertypeMode) {
 			int pos = getCaretPosition();
@@ -122,7 +122,7 @@ public class InspectorTextArea extends JTextArea {
 	}
 
 	/**
-	 * Sobreescreve o método processKeyEvent
+	 * Sobreescreve o metodo processKeyEvent
 	 */
 	protected void processKeyEvent(KeyEvent e) {
 		
