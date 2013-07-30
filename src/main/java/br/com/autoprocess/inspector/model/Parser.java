@@ -7,7 +7,6 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.autoprocess.inspector.bean.ItemTabela;
 import br.com.autoprocess.inspector.exceptions.IncompleteBufferException;
 import br.com.autoprocess.inspector.exceptions.InvalidArrayLengthException;
 import br.com.autoprocess.inspector.exceptions.InvalidLayoutException;
@@ -441,9 +440,9 @@ public class Parser {
 			retorno.setTamanho(Integer.parseInt(tamanho));
 			
 		} catch (Exception e) { // Algum caracter inv�lido na posicao onde deveria ser o tamanho
-			throw new InvalidLayoutException(numeroLinha);
-		} finally {
 			s.close();
+			
+			throw new InvalidLayoutException(numeroLinha);
 		}
 		
 		// ------------------------
@@ -497,6 +496,8 @@ public class Parser {
 			}
 		} catch (Exception e) {
 			retorno.setDescricao("");
+		} finally {
+			s.close();
 		}
 		
 		return retorno;
@@ -614,7 +615,7 @@ public class Parser {
 			valor = valor.trim();
 			
 			for (int j = valor.length(); j < retorno.getTamanho(); j++) {
-				valor += "�";
+				valor += "·";
 			}
 		}
 		
