@@ -20,7 +20,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.autoprocess</groupId>
 	<artifactId>buffer-inspector</artifactId>
-	<version>13.7.25</version>
+	<version>${maven.build.timestamp}-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Buffer Inspector</name>
 	<description>Displays a table of contents breaking a buffer based on a specific file layout.</description>
@@ -73,7 +73,7 @@
 			</plugin>
 
 			<!-- baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah -->
-
+<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -182,6 +182,8 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
+-->
+  
 			<!-- baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah -->
 
 		</plugins>

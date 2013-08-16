@@ -178,7 +178,7 @@ public class FormMain extends JFrame {
 		// ---------------------------
 		// Help - About
 		// ---------------------------
-		JMenuItem submenuAbout = new JMenuItem("About");
+		JMenuItem submenuAbout = new JMenuItem("About "+ Inspector.APPLICATION_NAME);
 		submenuAbout.setMnemonic(KeyEvent.VK_A);
 
 		submenuAbout.addActionListener(new ActionListener() {

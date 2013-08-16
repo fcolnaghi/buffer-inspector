@@ -31,14 +31,14 @@ public class Inspector {
 		// ---------------------------
 		Locale.setDefault(new Locale("en", "US"));
 		
-		
 		// ---------------------------
 		// Look and Feel
 		// ---------------------------
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			e.printStackTrace();
+			//...
 		}
 		
 		// ---------------------------
