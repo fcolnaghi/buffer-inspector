@@ -151,7 +151,7 @@ public class FormAbout extends JDialog {
 
 		// visit us
 		labelVisitUs = new JLabel();
-		labelVisitUs.setText("Visit out website");
+		labelVisitUs.setText("Visit our website");
 		labelVisitUs.setBounds(395, 11, 89, 16);
 
 		labelVisitUs.setForeground(new Color(0, 128, 224));
