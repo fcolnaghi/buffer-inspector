@@ -8,6 +8,8 @@
 	<artifactId>buffer-inspector</artifactId>
 	<version>13.8.16</version>
 	<packaging>jar</packaging>
+	
+	<description>Buffer Inspector is a simple but powerful software. It separates a buffer according to a predetermined layout, presenting the results in a table format.</description>
 
 	<name>Buffer Inspector</name>
 	<url>https://github.com/autoprocess/buffer-inspector</url>
@@ -16,13 +18,6 @@
 		<name>Autoprocess Automação de Processos</name>
 		<url>http://www.autoprocess.com.br</url>
 	</organization>
-
-<!--
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
-	</properties>
--->
 
 	<licenses>
 		<license>
@@ -65,6 +60,5 @@
 
 		</plugins>
 	</build>
-
-	<description>Buffer Inspector is a simple but powerful software. It separates a buffer according to a predetermined layout, presenting the results in a table format.</description>
+	
 </project>
