@@ -615,7 +615,7 @@ public class Parser {
 			valor = valor.trim();
 			
 			for (int j = valor.length(); j < retorno.getTamanho(); j++) {
-				valor += "Â·";
+				valor += "·";
 			}
 		}
 		
@@ -623,7 +623,7 @@ public class Parser {
 		// Se o tipo for numerico e tiver algum espaco no valor, substitui cada espaco por um caracter visivel
 		// ------------------------
 		if (tipo.equals("N")) {
-			valor = valor.replaceAll(" ", "ï¿½");
+			valor = valor.replaceAll(" ", "·");
 
 			retorno.setValor(valor);
 		}

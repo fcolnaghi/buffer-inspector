@@ -18,7 +18,6 @@ import java.io.IOException;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -49,7 +48,7 @@ public class FormMain extends JFrame {
 	private ModInspector modInspector;
 
 	// ---------------------------
-	// Carrega todas as janelas da aplicação
+	// Carrega todas as janelas da aplicacao
 	// ---------------------------
 	FormAbout about = new FormAbout();
 
@@ -61,8 +60,6 @@ public class FormMain extends JFrame {
 	
 	private InspectorTextAreaComponent buffer;
 	private JTable table;
-
-	private JButton exportar;
 	
 	/**
 	 * Construtor da classe
@@ -108,11 +105,6 @@ public class FormMain extends JFrame {
 		createCentralPanel();
 		
 		// ---------------------------
-		// Painel inferior
-		// ---------------------------
-		createBottomPanel();
-		
-		// ---------------------------
 		// Populates combobox
 		// ---------------------------
 		loadDirectories();
@@ -125,11 +117,6 @@ public class FormMain extends JFrame {
 	public void loadMenu() {
 		
 		JMenuBar menubar = new JMenuBar();
-		
-		// ---------------------------
-		// Icones
-		// ---------------------------
-		// ImageIcon icon = new ImageIcon(getClass().getResource("exit.png"));
 
 		// ---------------------------
 		// File
@@ -143,7 +130,9 @@ public class FormMain extends JFrame {
 		// ---------------------------
 		JMenuItem submenuExport = new JMenuItem("Export...");
 		submenuExport.setMnemonic(KeyEvent.VK_O);
-
+		
+		submenuExport.setIcon(new ImageIcon(getClass().getResource("/export.gif")));
+		
 		submenuExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				exportData();
@@ -356,40 +345,6 @@ public class FormMain extends JFrame {
 		buffer.registerKeyboardAction(redoAction, KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK), JComponent.WHEN_FOCUSED);
 		
 	}
-	
-	/**
-	 * Metodo responsavel por criar o painel inferior
-	 */
-	public void createBottomPanel() {
-		
-		JPanel painel = new JPanel();
-		
-		getContentPane().add(painel, BorderLayout.SOUTH);
-		painel.setLayout(new BorderLayout());
-		
-		// ---------------------------
-		// Painel esquerdo
-		// ---------------------------
-		JPanel painelEsquerdo = new JPanel();
-		painel.add(painelEsquerdo, BorderLayout.WEST);
-		
-		// ---------------------------
-		// Exportar
-		// ---------------------------
-		JPanel painelDireito = new JPanel();
-		painel.add(painelDireito, BorderLayout.EAST);
-		
-		exportar = new JButton("Export...");
-		
-		painelDireito.add(exportar);
-		
-		exportar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				exportData();
-			}
-		});
-		
-	}
 
 	/**
 	 * Loads directories
@@ -402,7 +357,7 @@ public class FormMain extends JFrame {
 		// ---------------------------
 		comboDirectories.addItem(new ItemCombo("Directories"));
 		
-		for (String d : modInspector.getDirectories()) {
+		for (String d : modInspector.getGroups()) {
 			comboDirectories.addItem(new ItemCombo(d));
 		}
 		
@@ -568,36 +523,6 @@ public class FormMain extends JFrame {
 					}
 					
 				}
-//				else if (comboTransacaoMI.isVisible()) { // MI
-//					
-//					// ---------------------------
-//					// Recupera a opcao selecionada na combo 'Transacao MI'
-//					// ---------------------------
-//					int index = comboTransacaoMI.getSelectedIndex();
-//					
-//					// ---------------------------
-//					// Se nao for a primeira opcao (label da combobox)
-//					// ---------------------------
-//					if (index != 0) {
-//						
-//						// ---------------------------
-//						// Recupera a Transacao MI selecionada
-//						// ---------------------------
-//						ItemCombo transacao = (ItemCombo) comboTransacaoMI.getSelectedItem();
-//						
-//						// ---------------------------
-//						// Recupera o nome do arquivo de layout
-//						// ---------------------------
-//						String fileName = transacao.getValor();
-//						
-//						// ---------------------------
-//						// Carrega os dados na tabela
-//						// ---------------------------
-//						table.setModel(modInspector.getItensTabela(fileName, buffer.getText(), TipoHeader.MI, ctx));
-//						
-//					}
-//					
-//				}
 				
 			}
 			
@@ -623,7 +548,7 @@ public class FormMain extends JFrame {
 	private void exportData() {
 		
 		// ---------------------------
-		// Cria a caixa de di�logo para salvar o arquivo
+		// Cria a caixa de dialogo para salvar o arquivo
 		// ---------------------------
 		JFileChooser fileChooser = new JFileChooser();
 		

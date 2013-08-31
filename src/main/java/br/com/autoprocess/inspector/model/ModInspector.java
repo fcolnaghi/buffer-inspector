@@ -18,16 +18,12 @@ import br.com.autoprocess.inspector.view.TableModel;
 
 public class ModInspector {
 	
-	public ModInspector() {
-		
-	}
-	
 	/**
-	 * Recupera a lista de servicos GSI
+	 * Recupera a lista de grupos
 	 * 
 	 * @return
 	 */
-	public List<String> getDirectories() {
+	public List<String> getGroups() {
 		
 		List<String> retorno = new ArrayList<String>();
 		
@@ -41,9 +37,6 @@ public class ModInspector {
 		// ------------------------
 		if (!file.exists()) {
 			file.mkdir();
-			
-			// cria um arquivo padrÃ£o
-			
 		} else {
 			
 			// ------------------------
@@ -54,6 +47,11 @@ public class ModInspector {
 					retorno.add(f.getName());
 				}
 			}
+
+			// ------------------------
+			// Cria um grupo default para os itens que não estão agrupados
+			// ------------------------			
+			retorno.add(Inspector.DEFAULT_GROUP_NAME);
 			
 			// ------------------------
 			// Ordena a lista
@@ -66,30 +64,32 @@ public class ModInspector {
 	}
 
 	/**
-	 * Recupera a lista de operacoes GSI
+	 * Recupera as interfaces dentro do grupo selecionado
 	 * 
-	 * @param servico
+	 * @param grupo
 	 * @return
 	 */
-	public List<String> getInterfaces(String servico) {
+	public List<String> getInterfaces(String grupo) {
 		
 		List<String> retorno = new ArrayList<String>();
 		
 		// ------------------------
 		// Carrega o diretorio
 		// ------------------------
-		File file = new File(getApplicationPath() + "\\interfaces\\" + servico);
+		File file;
+		
+		if (Inspector.DEFAULT_GROUP_NAME.equals(grupo)) {
+			file = new File(getApplicationPath() + "\\interfaces");
+		} else {
+			file = new File(getApplicationPath() + "\\interfaces\\" + grupo);
+		}
 		
 		// ------------------------
 		// Cria o diretorio caso ele nao exista
 		// ------------------------
-		if (!file.exists()) {
-			file.mkdir();
-		} else {
-			for (File f : file.listFiles()) {
-				if (!f.isDirectory() && f.getName().endsWith(".txt")) {
-					retorno.add(f.getName().split(".txt")[0]);
-				}
+		for (File f : file.listFiles()) {
+			if (!f.isDirectory() && f.getName().endsWith(".txt")) {
+				retorno.add(f.getName().split(".txt")[0]);
 			}
 		}
 		
@@ -101,23 +101,6 @@ public class ModInspector {
 		return retorno;
 
 	}
-
-	/**
-	 * Recupera a lista de transacoes MI
-	 * 
-	 * @return
-	 */
-//	public ItemCombo[] getTransactionsList() {
-//		List<ItemCombo> retorno = new ArrayList<ItemCombo>();
-//		
-//		retorno.add(new ItemCombo("Transaction"));
-//		
-//		for (String file : modFiles.getTransactionsList()) {
-//			retorno.add(new ItemCombo(file));
-//		}
-//		
-//		return retorno.toArray(new ItemCombo[0]);
-//	}
 
 	/**
 	 * Recupera os itens da tabela
@@ -284,8 +267,6 @@ public class ModInspector {
 		return espacos + nome;
 	}
 	
-	///////////////////////////////////////////////////////////////////////
-	
 	/**
 	 * Carrega os dados do arquivo de layout (entrada ou saï¿½da) em uma lista de Strings
 	 * 
@@ -296,13 +277,15 @@ public class ModInspector {
 	public List<String> loadLayout(String fileName) throws Exception {
 
 		List<String> retorno = new ArrayList<String>();
-
-//		Contexto tipoLeitura = Contexto.ENTRADA; // default
 		
 		// ------------------------
 		// Abre o arquivo de layout
 		// ------------------------
-		File file = new File(getApplicationPath() + "\\interfaces\\" + fileName + ".txt");
+		if (fileName.startsWith(Inspector.DEFAULT_GROUP_NAME)) {
+			fileName = fileName.substring((Inspector.DEFAULT_GROUP_NAME.length() + 1), fileName.length());
+		}
+		
+		File file = new File(getApplicationPath() + "\\interfaces\\" + fileName + ".txt");			
 		
 		// ------------------------
 		// Le o conteudo do arquivo
@@ -335,18 +318,8 @@ public class ModInspector {
 				// ------------------------
 				// Le o conteudo do arquivo atraves de seu tipo (entrada/saida), desconsiderando comentarios
 				// ------------------------
-				if (!linha.isEmpty() && !linha.startsWith("#") && !linha.startsWith(";;") && !linha.startsWith("//")) {
-
-//					if (linha.toUpperCase().equals("[ENTRADA]") || linha.toUpperCase().equals("[INPUT]")) {
-//						tipoLeitura = Contexto.ENTRADA;
-//					} else if (linha.toUpperCase().equals("[SAIDA]") || linha.toUpperCase().equals("[OUTPUT]")) {
-//						tipoLeitura = Contexto.SAIDA;
-//					} else {
-//						if (ctx == tipoLeitura) {
-							retorno.add(i +";" + linha);
-//						}
-//					}
-
+				if (!linha.isEmpty() && !linha.startsWith("#") && !linha.startsWith(";") && !linha.startsWith("/")) {
+					retorno.add(i + ";" + linha);
 				}
 
 				i++;
@@ -394,117 +367,5 @@ public class ModInspector {
 		}
 		
 	}
-
-//	
-//	/**
-//	 * Retorna uma lista de servicos MI
-//	 * 
-//	 * @return
-//	 */
-//	public List<String> getTransactionsList() {
-//		
-//		List<String> retorno = new ArrayList<String>();
-//		String quebraLinha = System.getProperty("line.separator");
-//		
-//		// ------------------------
-//		// Carrega o diretorio
-//		// ------------------------
-//		File file = new File(getApplicationPath() + "\\MI");
-//		
-//		// ------------------------
-//		// Cria o diretorio caso ele nao exista
-//		// ------------------------
-//		if (!file.exists()) {
-//			file.mkdir();
-//			
-//			// ------------------------
-//			// Cria um arquivo de exemplo dentro do diretorio
-//			// ------------------------
-//			try {
-//				
-//				// ------------------------
-//				// Armazena o conteudo que sera escrito no arquivo
-//				// ---------------------------
-//				StringBuilder conteudoArquivo = new StringBuilder();
-//				
-//				// ---------------------------
-//				// Escreve o conteudo no arquivo
-//				// ---------------------------
-//				conteudoArquivo.append("// ---------------------------------------------------------------------------" + quebraLinha);
-//				conteudoArquivo.append("// 1) Blank lines are ignored" + quebraLinha);
-//				conteudoArquivo.append("// 2) Lines started by double slashes are comments" + quebraLinha);
-//				conteudoArquivo.append("// 3) Follow this example layout files and by happy!" + quebraLinha);
-//				conteudoArquivo.append("// ---------------------------------------------------------------------------" + quebraLinha);
-//				
-//				conteudoArquivo.append(quebraLinha);
-//				
-//				conteudoArquivo.append("// Put the following text (inside brackets) at the left box to test with template layout file" + quebraLinha);
-//				conteudoArquivo.append("// [29John Doe            03Xbox 360  00900Super Man 00050Ted Bear  001001VW Golf   Black                              19830912]" + quebraLinha);
-//				
-//				conteudoArquivo.append(quebraLinha);
-//				
-//				conteudoArquivo.append("#########" + quebraLinha);
-//				conteudoArquivo.append("[input]" + quebraLinha);
-//				conteudoArquivo.append("#########" + quebraLinha);
-//				conteudoArquivo.append("age;2;N;Customer age" + quebraLinha);
-//				conteudoArquivo.append("name;20;A;Customer name" + quebraLinha);
-//				conteudoArquivo.append("toys;2;ARRAY;Amount of toys (variable array example)" + quebraLinha);
-//				conteudoArquivo.append("{" + quebraLinha);
-//				conteudoArquivo.append("	toy-name;10;A;The toy name" + quebraLinha);
-//				conteudoArquivo.append("	toy-price;3,2;N;A toy price (note, it is possible to separate the value with a comma)" + quebraLinha);
-//				conteudoArquivo.append("}" + quebraLinha);
-//				conteudoArquivo.append("cars;1;FIXED-ARRAY(3);A fixed array (fixed arrays must put a value between commas)" + quebraLinha);
-//				conteudoArquivo.append("{" + quebraLinha);
-//				conteudoArquivo.append("	car-name;10;A;" + quebraLinha);
-//				conteudoArquivo.append("	car-color;5;A;" + quebraLinha);
-//				conteudoArquivo.append("}" + quebraLinha);
-//				conteudoArquivo.append("birthday;8;N;" + quebraLinha);
-//				
-//				conteudoArquivo.append(quebraLinha);
-//				
-//				conteudoArquivo.append("#######" + quebraLinha);
-//				conteudoArquivo.append("[output]" + quebraLinha);
-//				conteudoArquivo.append("#######" + quebraLinha);
-//				conteudoArquivo.append("error-code;5;Example of output error code" + quebraLinha);
-//				conteudoArquivo.append("error-message;100;Example of output message error" + quebraLinha);
-//				
-//				// ---------------------------
-//				// Cria o arquivo caso nao exista
-//				// ---------------------------
-//				File template = new File(getApplicationPath() + "\\MI\\template.txt");
-//				
-//				// ---------------------------
-//				// Escreve o conteudo no arquivo
-//				// ---------------------------
-//				FileWriter arquivo = new FileWriter(template);
-//				arquivo.write(conteudoArquivo.toString());
-//				
-//				// ---------------------------
-//				// Fecha o arquivo
-//				// ---------------------------
-//				arquivo.close();
-//				
-//			} catch (Exception e) {
-//				// Apenas deixa de criar o arquivo de template
-//			}
-//			
-//		}
-//		
-//		// ------------------------
-//		// Lista os arquivos
-//		// ------------------------
-//		for (File f : file.listFiles()) {
-//			if (!f.isDirectory() && f.getName().endsWith(".txt")) {
-//				retorno.add(f.getName().split(".txt")[0]);
-//			}
-//		}
-//		
-//		// ------------------------
-//		// Ordena a lista
-//		// ------------------------
-//		Collections.sort(retorno, Collator.getInstance());
-//		
-//		return retorno;
-//	}
 	
 }
