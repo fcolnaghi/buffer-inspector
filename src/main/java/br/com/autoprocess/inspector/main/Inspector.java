@@ -9,10 +9,10 @@ import br.com.autoprocess.inspector.view.FormMain;
 
 public class Inspector {
 
-	public static final String VERSAO = "13.6.0";
+	public static final String VERSION = "13.9.24";
 	public static final String APPLICATION_NAME = "Buffer Inspector";
-	public static final String INTERNAL_NAME = "buffer-inspector-"+ VERSAO;
-	public static final String DEFAULT_GROUP_NAME = "Not in groups"; 
+	public static final String INTERNAL_NAME = "buffer-inspector-"+ VERSION;
+	public static final String DEFAULT_GROUP_NAME = "Not grouped"; 
 	public static final int QTD_IDENTACOES = 3;
 	
 	/**

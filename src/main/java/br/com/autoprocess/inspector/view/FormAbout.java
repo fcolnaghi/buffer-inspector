@@ -67,7 +67,7 @@ public class FormAbout extends JDialog {
 		
 		// version
 		labelVersion = new JLabel();
-		labelVersion.setText(Inspector.VERSAO);
+		labelVersion.setText(Inspector.VERSION);
 		labelVersion.setBounds(255, 52, 425, 16);
 		getContentPane().add(labelVersion);
 		
