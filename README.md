@@ -2,6 +2,15 @@
 
 Buffer Inspector is a simple but powerful software. It separates a buffer according to a predetermined layout, presenting the results in a table format.
 
+##Cookbok
+1) Clone this project
+
+    git clone https://github.com/autoprocess/buffer-inspector.git
+
+2) Open the directory and run the follow command
+
+    mvn eclipse:eclipse
+
 ##License
 
 >  Copyright (C) 2013 Autoprocess, Inc.
