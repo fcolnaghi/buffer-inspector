@@ -2,4 +2,4 @@
 
 Displays a table of contents breaking a buffer based on a specific file layout.
 
-Visit [https://github.com/autoprocess/buffer-inspector](https://github.com/autoprocess/buffer-inspector)
+Visit [http://dakoctba.github.io/buffer-inspector](http://dakoctba.github.io/buffer-inspector)
