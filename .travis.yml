@@ -4,6 +4,6 @@ jdk:
 notifications:
     email:
         recipients:
-            - suporte@autoprocess.com.br
+            - jackson.s.teixeira@gmail.com
         on_success: change
         on_failure: always
