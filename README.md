@@ -1,8 +1,8 @@
-#Buffer Inspector [![Build Status](https://travis-ci.org/autoprocess/buffer-inspector.png?branch=master)](https://travis-ci.org/autoprocess/buffer-inspector)
+# Buffer Inspector [![Build Status](https://travis-ci.org/dakoctba/buffer-inspector.svg?branch=master)](https://travis-ci.org/dakoctba/buffer-inspector)
 
 Buffer Inspector is a simple but powerful software. It separates a buffer according to a predetermined layout, presenting the results in a table format.
 
-##Cookbok
+### Cookbok
 1) Clone this project
 
     git clone https://github.com/autoprocess/buffer-inspector.git
@@ -11,10 +11,16 @@ Buffer Inspector is a simple but powerful software. It separates a buffer accord
 
     mvn eclipse:eclipse
 
+### Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
 ##License
 
->  Copyright (C) 2013 Autoprocess, Inc.
->
 >  Licensed under the Apache License, Version 2.0 (the "License");
 >  you may not use this file except in compliance with the License.
 >  You may obtain a copy of the License at
