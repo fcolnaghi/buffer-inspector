@@ -1,6 +1,6 @@
 # Buffer Inspector [![Build Status](https://travis-ci.org/dakoctba/buffer-inspector.svg?branch=master)](https://travis-ci.org/dakoctba/buffer-inspector)
 
-Buffer Inspector is a simple but powerful software. It separates a buffer according to a predetermined layout, presenting the results in a table format.
+Buffer Inspector é um software simples, mas poderosa. Ele separa um buffer de acordo com um esquema predeterminado, apresentando os resultados em formato de tabela.
 
 ### Cookbok
 1) Clone this project
