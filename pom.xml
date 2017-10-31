@@ -26,7 +26,6 @@
 
 	<build>
 		<plugins>
-
 			<!-- instrui o maven compilar com a versao 1.7 do java -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -56,5 +55,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
 </project>
