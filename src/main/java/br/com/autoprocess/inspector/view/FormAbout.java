@@ -56,7 +56,6 @@ public class FormAbout extends JDialog {
 		// ---------------------------
 		// Info
 		// ---------------------------
-		
 		// name
 		labelName = new JLabel();
 		labelName.setText(Inspector.APPLICATION_NAME);
@@ -171,13 +170,11 @@ public class FormAbout extends JDialog {
 
 		// Copy
 		labelCopy = new JLabel();
-		labelCopy.setText("Autoprocess e logotipo Autoprocess s„o marcas comerciais da Autoprocess AutomaÁ„o de Processos.");
+		labelCopy.setText("Autoprocess e logotipo Autoprocess s√£o marcas comerciais da Autoprocess Automa√ß√£o de Processos.");
 		labelCopy.setBounds(0, 39, 694, 16);
 		labelCopy.setHorizontalAlignment(SwingConstants.CENTER);
 		labelCopy.setFont(new java.awt.Font("Segoe UI", 0, 10));
 		labelCopy.setForeground(new Color(153, 153, 153));
 		bottomPanel.add(labelCopy);
-
 	}
-
 }
